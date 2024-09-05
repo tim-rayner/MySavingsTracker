@@ -75,3 +75,5 @@ const deleteAction = asyncHandler(async (req: any, res: any) => {
 
   res.status(200).json({ id: req.params.id });
 });
+
+export { getActionsByUserId, setAction, updateAction, deleteAction };

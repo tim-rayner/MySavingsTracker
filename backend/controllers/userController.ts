@@ -75,4 +75,37 @@ const deleteUser = asyncHandler(async (req: any, res: any) => {
   }
 });
 
-export { getUserById, getUsers, setUser, updateUser, deleteUser };
+//add endpoint to create a dummy user, which will only create a new user if there are no users in the database
+const CreateDummyUser = asyncHandler(async (req: any, res: any) => {
+  console.log("Creating dummy user".green.bold);
+  const users = await userModel.find();
+  if (users.length === 0) {
+    const user = await userModel.create({
+      authTokenId: "123456",
+      username: "john_doe",
+      name: "John",
+      surname: "Doe",
+      email: "john@doe.com",
+      basicInfo: {
+        monthlySavingGoal: 1000,
+        monthlyOutgoings: 500,
+        monthlyIncome: 2000,
+        salary: true,
+      },
+    });
+
+    console.log("Dummy user 'John Doe' created".green.bold);
+    res.status(200).json(user);
+  }
+
+  res.status(400).json({ message: "User already exists" });
+});
+
+export {
+  getUserById,
+  getUsers,
+  setUser,
+  updateUser,
+  deleteUser,
+  CreateDummyUser,
+};
