@@ -1,13 +1,13 @@
 import express from "express";
 import "colors";
 import dotenv from "dotenv";
-import { errorHandler } from "@/backend/middleware/errorMiddleware";
-import connectDB from "@/backend/config/db";
+import { errorHandler } from "@/middleware/errorMiddleware";
+import connectDB from "@/config/db";
 
 //Routes
-import goalRoutes from "@/backend/routes/goalRoutes";
-import userRoutes from "@/backend/routes/userRoutes";
-import actionRoutes from "@/backend/routes/actionRoutes";
+import goalRoutes from "@/routes/goalRoutes";
+import userRoutes from "@/routes/userRoutes";
+import actionRoutes from "@/routes/actionRoutes";
 
 //Config
 dotenv.config();
