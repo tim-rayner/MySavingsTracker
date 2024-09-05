@@ -3,6 +3,11 @@ import mongoose from "mongoose";
 
 const goalSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
     text: {
       type: String,
       required: [true, "Please enter a goal"],
@@ -10,6 +15,7 @@ const goalSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    autoCreate: true,
   }
 );
 
