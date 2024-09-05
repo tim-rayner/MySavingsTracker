@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import actionModel from "../models/actionModel";
+import actionModel from "@/backend/models/actionModel";
 
 /**
  * @desc get Actions by user id

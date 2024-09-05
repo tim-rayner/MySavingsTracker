@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import goalModel from "../models/goalModel";
+import goalModel from "@/backend/models/goalModel";
 
 /**
  * @desc get Goals
