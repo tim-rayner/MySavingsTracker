@@ -1,4 +1,5 @@
-import { View, StyleSheet, Button } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { BrandButton } from "@/components/atoms/BrandButton";
 import { theme } from "@/theme";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "expo-router";
@@ -14,7 +15,7 @@ export default function OnboardingScreen() {
 
   return (
     <View style={styles.container}>
-      <Button title="Let me in" onPress={handlePress} />
+      <BrandButton title="Let me in" onPress={handlePress} />
     </View>
   );
 }

@@ -1,8 +1,9 @@
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { theme } from "@/theme";
 
 //stores
 import { useUserStore } from "@/store/userStore";
+import { BrandButton } from "@/components/atoms/BrandButton";
 
 export default function ProfileScreen() {
   const toggleHasOnboarded = useUserStore((state) => state.toggleHasOnboarded);
@@ -10,7 +11,7 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Profile</Text>
-      <Button title="Back to onboarding" onPress={toggleHasOnboarded} />
+      <BrandButton title="Back to onboarding" onPress={toggleHasOnboarded} />
     </View>
   );
 }
