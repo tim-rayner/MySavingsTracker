@@ -1,8 +1,14 @@
 module.exports = {
   extends: ["expo", "prettier"],
   plugins: ["prettier", "react-native"],
-  rules: {
-    "prettier/prettier": "error",
-    "react-native/no-unused-styles": "error",
+  rules: {},
+  settings: {
+    "import/resolver": {
+      node: {
+        paths: ["src"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+      typescript: {},
+    },
   },
 };
