@@ -1,45 +1,16 @@
-import React from "react";
+import { Stack } from "expo-router";
 
-import { Tabs } from "expo-router";
-
-//icons
-import Entypo from "@expo/vector-icons/Entypo";
-
-import { theme } from "@/theme";
-
-export default function Layout() {
+export default function RootLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: theme.colorLightBlue }}>
-      <Tabs.Screen
-        name="index"
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="onboarding"
         options={{
-          title: "My Savings Tracker",
-          tabBarShowLabel: false,
-          tabBarIcon: ({ size, color }) => (
-            <Entypo name="wallet" size={size} color={color} />
-          ),
+          presentation: "modal",
+          headerShown: false,
         }}
       />
-      <Tabs.Screen
-        name="insights"
-        options={{
-          title: "Insights",
-          tabBarShowLabel: false,
-          tabBarIcon: ({ size, color }) => (
-            <Entypo name="line-graph" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarShowLabel: false,
-          tabBarIcon: ({ size, color }) => (
-            <Entypo name="user" size={size} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
+    </Stack>
   );
 }
