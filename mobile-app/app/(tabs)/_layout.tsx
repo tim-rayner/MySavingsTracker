@@ -2,15 +2,20 @@ import React from "react";
 
 import { Tabs, Redirect } from "expo-router";
 
+//Stores
+import { useUserStore } from "@/store/userStore";
+
 //icons
 import Entypo from "@expo/vector-icons/Entypo";
 
 // eslint-disable-next-line import/no-unresolved
 import { theme } from "@/theme";
 
-const hasFinishedOnboarding = false;
-
 export default function Layout() {
+  const hasFinishedOnboarding = useUserStore(
+    (state) => state.hasFinishedOnboarding,
+  );
+
   if (!hasFinishedOnboarding) {
     return <Redirect href="/onboarding" />;
   }
