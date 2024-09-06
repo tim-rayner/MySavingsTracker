@@ -3,7 +3,7 @@ import React from "react";
 import { Tabs, Redirect } from "expo-router";
 
 //Stores
-import { useUserStore } from "@/store/userStore";
+import { useUserStore } from "@/stores/userStore";
 
 //icons
 import Entypo from "@expo/vector-icons/Entypo";

@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import { BrandButton } from "@/components/atoms/BrandButton";
 import { theme } from "@/theme";
-import { useUserStore } from "@/store/userStore";
+import { useUserStore } from "@/stores/userStore";
 import { useRouter } from "expo-router";
 
 export default function OnboardingScreen() {

@@ -2,7 +2,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { theme } from "@/theme";
 
 //stores
-import { useUserStore } from "@/store/userStore";
+import { useUserStore } from "@/stores/userStore";
 import { BrandButton } from "@/components/atoms/BrandButton";
 
 export default function ProfileScreen() {
