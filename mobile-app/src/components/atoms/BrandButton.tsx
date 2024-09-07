@@ -40,9 +40,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 12,
     borderRadius: 6,
-    backgroundColor: theme.colorGreen,
+    backgroundColor: theme.colorLightBlue,
   },
   buttonPressed: {
-    backgroundColor: theme.colorLeafyGreen,
+    backgroundColor: theme.colorDeepBlue,
   },
 });
