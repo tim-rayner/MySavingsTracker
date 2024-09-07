@@ -1,13 +1,14 @@
 import { theme } from "@/theme";
-import { StyleSheet, Text, Pressable, Platform } from "react-native";
+import { StyleSheet, Text, Pressable, Platform, ViewStyle } from "react-native";
 import * as Haptics from "expo-haptics";
 
-type Props = {
+interface BrandButtonProps {
   title: string;
   onPress: () => void;
-};
+  style?: ViewStyle; // Add style prop
+}
 
-export function BrandButton({ title, onPress }: Props) {
+export function BrandButton({ title, onPress, style }: BrandButtonProps) {
   const handlePressed = () => {
     if (Platform.OS !== "web") {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -20,9 +21,9 @@ export function BrandButton({ title, onPress }: Props) {
       onPress={handlePressed}
       style={(state) => {
         if (state.pressed) {
-          return [styles.button, styles.buttonPressed];
+          return [styles.button, styles.buttonPressed, style];
         }
-        return styles.button;
+        return [styles.button, style];
       }}
     >
       <Text style={styles.text}>{title}</Text>
@@ -34,13 +35,15 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "semibold",
   },
   button: {
     paddingHorizontal: 18,
     paddingVertical: 12,
-    borderRadius: 6,
-    backgroundColor: theme.colorLightBlue,
+
+    backgroundColor: theme.primary,
+    alignItems: "center",
+    borderRadius: 50,
   },
   buttonPressed: {
     backgroundColor: theme.colorDeepBlue,

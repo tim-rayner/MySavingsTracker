@@ -4,6 +4,7 @@ import { theme } from "@/theme";
 //stores
 import { useUserStore } from "@/src/stores/userStore";
 import { BrandButton } from "@/src/components/atoms/BrandButton";
+import { Link } from "expo-router";
 
 export default function ProfileScreen() {
   const toggleHasOnboarded = useUserStore((state) => state.toggleHasOnboarded);
@@ -11,7 +12,10 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Profile</Text>
-      <BrandButton title="Back to onboarding" onPress={toggleHasOnboarded} />
+
+      <Link href="/onboarding" asChild>
+        <BrandButton title="Go to onboarding" onPress={toggleHasOnboarded} />
+      </Link>
     </View>
   );
 }
@@ -25,5 +29,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
+  },
+
+  button: {
+    marginVertical: 10,
   },
 });

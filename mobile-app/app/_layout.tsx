@@ -1,5 +1,9 @@
 import { Stack } from "expo-router";
 
+/**
+ *
+ * @todo Implement fonts with @expo-google-fonts/inter
+ */
 export default function RootLayout() {
   return (
     <Stack>
@@ -10,7 +14,6 @@ export default function RootLayout() {
       <Stack.Screen
         name="onboarding"
         options={{
-          presentation: "modal",
           headerShown: false,
         }}
       />

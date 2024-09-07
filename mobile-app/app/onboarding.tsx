@@ -1,11 +1,11 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { BrandButton } from "@/src/components/atoms/BrandButton";
 import { theme } from "@/theme";
 import { useUserStore } from "@/src/stores/userStore";
 import { useRouter } from "expo-router";
-import { LinearGradient } from "expo-linear-gradient";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-export default function OnboardingScreen() {
+export default function NewOnboardingScreen() {
   const router = useRouter();
   const toggleHasOnboarded = useUserStore((state) => state.toggleHasOnboarded);
 
@@ -15,33 +15,71 @@ export default function OnboardingScreen() {
   };
 
   return (
-    <LinearGradient
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      colors={[theme.colorBlue, theme.colorBlue, theme.colorDeepBlue]}
-      style={styles.container}
-    >
-      <Text style={styles.subtext}>Welcome to</Text>
-      <Text style={styles.text}>My Savings Tracker</Text>
+    <SafeAreaView style={styles.page}>
+      <View style={styles.pageContent}>
+        <FontAwesome5 name="people-arrows" size={100} style={styles.image} />
+      </View>
+      <View style={styles.footer}>
+        <Text style={styles.title}>Track every transaction</Text>
+        <Text style={styles.subTitle}>
+          Keep track of every transaction with our easy to use app
+        </Text>
 
-      <BrandButton title="Finish onboarding" onPress={handlePress} />
-    </LinearGradient>
+        <View style={styles.buttons}>
+          <Text style={styles.buttonText}> Skip </Text>
+          <BrandButton
+            title="Continue"
+            onPress={handlePress}
+            style={styles.button}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  page: {
+    //alignItems: "center",
     flex: 1,
     justifyContent: "center",
+    backgroundColor: theme.background,
+    padding: 20,
+  },
+  title: {
+    color: theme.colorWhite,
+    fontSize: 50,
+    fontWeight: "bold",
+    letterSpacing: 1.1,
+    marginVertical: 10,
+  },
+  subTitle: { color: "grey", fontSize: 20, lineHeight: 28 },
+  image: {
+    alignSelf: "center",
+    margin: 20,
+    color: theme.colorBlue,
+  },
+  buttons: {
+    marginTop: 20,
+    flexDirection: "row",
     alignItems: "center",
-    backgroundColor: theme.colorWhite,
+    gap: 20,
   },
-  text: {
-    fontSize: 36,
-    marginBottom: 30,
+  button: {
+    flex: 1,
   },
-  subtext: {
-    fontSize: 24,
-    marginBottom: 10,
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "semibold",
+    padding: 15,
+  },
+  footer: {
+    marginTop: "auto",
+    padding: 20,
+  },
+  pageContent: {
+    padding: 20,
+    flex: 1, //take everything available to you
   },
 });
