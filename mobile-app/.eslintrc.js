@@ -1,7 +1,7 @@
 module.exports = {
   extends: ["expo", "prettier"],
   plugins: ["prettier", "react-native"],
-  rules: {},
+  rules: { "import/no-unresolved": "off" },
   settings: {
     "import/resolver": {
       node: {
