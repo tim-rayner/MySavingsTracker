@@ -2,8 +2,8 @@ import { Text, View, StyleSheet } from "react-native";
 import { theme } from "@/theme";
 
 //stores
-import { useUserStore } from "@/stores/userStore";
-import { BrandButton } from "@/components/atoms/BrandButton";
+import { useUserStore } from "@/src/stores/userStore";
+import { BrandButton } from "@/src/components/atoms/BrandButton";
 
 export default function ProfileScreen() {
   const toggleHasOnboarded = useUserStore((state) => state.toggleHasOnboarded);
