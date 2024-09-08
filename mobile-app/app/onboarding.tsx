@@ -48,7 +48,6 @@ export default function NewOnboardingScreen() {
   const data = onboardingSteps[onboardingPageIndex] || onboardingSteps[0];
 
   const onContinue = () => {
-    console.log("onContinue", onboardingPageIndex);
     if (onboardingPageIndex < onboardingSteps.length - 1) {
       onboardingPageNext(onboardingSteps.length);
       setOnboardingPageIndex(onboardingPageIndex + 1);
@@ -57,10 +56,16 @@ export default function NewOnboardingScreen() {
     endOnboarding();
   };
 
-  const endOnboarding = () => {
-    if (onboardingPageIndex === onboardingSteps.length - 1) {
+  //For future use
+  const onBack = () => {
+    if (onboardingPageIndex <= 0) {
       return;
     }
+    onboardingPagePrev();
+    setOnboardingPageIndex(onboardingPageIndex - 1);
+  };
+
+  const endOnboarding = () => {
     toggleHasOnboarded();
     //@todo: replace with the start of the auth flow (login or register)
     router.replace("/profile");

@@ -27,7 +27,7 @@ export const useUserStore = create(
 
       onboardingPageNext: (length: number) => {
         const state = get();
-        if (state.onboardingPageIndex >= length - 1) {
+        if (state.onboardingPageIndex < length - 1) {
           return;
         }
         set((state) => {
