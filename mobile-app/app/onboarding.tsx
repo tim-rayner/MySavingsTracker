@@ -74,8 +74,19 @@ export default function NewOnboardingScreen() {
   return (
     <SafeAreaView style={styles.page}>
       <View style={styles.pageContent}>
+        <View style={styles.stepIndicatorContainer}>
+          {onboardingSteps.map((step, index) => (
+            <View
+              style={[
+                styles.stepIndicator,
+                index === onboardingPageIndex ? styles.activeStepIndicator : {},
+              ]}
+            />
+          ))}
+        </View>
         <FontAwesome5 name={data.icon} size={100} style={styles.icon} />
       </View>
+
       <View style={styles.footer}>
         <Text style={styles.title}>{data.title}</Text>
         <Text style={styles.subTitle}>{data.subTitle}</Text>
@@ -134,6 +145,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "semibold",
     padding: 15,
+  },
+  stepIndicatorContainer: {
+    flex: 1,
+    flexDirection: "row",
+    top: 40,
+  },
+  stepIndicator: {
+    flex: 1, //eqally share the space with the other indicators
+    height: 5,
+    backgroundColor: "grey",
+    margin: 5,
+    borderRadius: 10,
+  },
+  activeStepIndicator: {
+    backgroundColor: theme.colorBlue,
   },
   footer: {
     marginTop: "auto",
