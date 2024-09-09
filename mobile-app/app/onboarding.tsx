@@ -15,8 +15,9 @@ import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import Animated, {
   FadeIn,
-  FadeInLeft,
-  SlideInLeft,
+  FadeOut,
+  SlideInRight,
+  SlideOutLeft,
 } from "react-native-reanimated";
 
 type OnboardingStep = {
@@ -107,15 +108,27 @@ export default function NewOnboardingScreen() {
             ))}
           </View>
 
-          <Animated.View entering={FadeIn} style={styles.iconContainer}>
+          <Animated.View
+            entering={FadeIn}
+            exiting={FadeOut}
+            style={styles.iconContainer}
+          >
             <FontAwesome5 name={data.icon} size={100} style={styles.icon} />
           </Animated.View>
 
           <View style={styles.footer}>
-            <Animated.Text entering={FadeInLeft} style={styles.title}>
+            <Animated.Text
+              entering={SlideInRight}
+              exiting={SlideOutLeft}
+              style={styles.title}
+            >
               {data.title}
             </Animated.Text>
-            <Animated.Text entering={FadeInLeft} style={styles.subTitle}>
+            <Animated.Text
+              entering={SlideInRight.delay(150)}
+              exiting={SlideOutLeft.delay(150)}
+              style={styles.subTitle}
+            >
               {data.subTitle}
             </Animated.Text>
 
@@ -159,9 +172,9 @@ const styles = StyleSheet.create({
   },
   subTitle: { color: "grey", fontSize: 20, lineHeight: 28 },
   iconContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    flex: 1,
   },
   icon: {
     color: theme.colorBlue,
