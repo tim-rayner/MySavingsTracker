@@ -13,6 +13,11 @@ import {
 import { useUserStore } from "@/src/stores/userStore";
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
+import Animated, {
+  FadeIn,
+  FadeInLeft,
+  SlideInLeft,
+} from "react-native-reanimated";
 
 type OnboardingStep = {
   title: string;
@@ -87,7 +92,7 @@ export default function NewOnboardingScreen() {
     <SafeAreaView style={styles.page}>
       <StatusBar style="light" />
       <GestureDetector gesture={swipes}>
-        <View style={styles.pageContent}>
+        <Animated.View key={onboardingPageIndex} style={styles.pageContent}>
           <View style={styles.stepIndicatorContainer}>
             {onboardingSteps.map((step, index) => (
               <View
@@ -101,11 +106,18 @@ export default function NewOnboardingScreen() {
               />
             ))}
           </View>
-          <FontAwesome5 name={data.icon} size={100} style={styles.icon} />
+
+          <Animated.View entering={FadeIn} style={styles.iconContainer}>
+            <FontAwesome5 name={data.icon} size={100} style={styles.icon} />
+          </Animated.View>
 
           <View style={styles.footer}>
-            <Text style={styles.title}>{data.title}</Text>
-            <Text style={styles.subTitle}>{data.subTitle}</Text>
+            <Animated.Text entering={FadeInLeft} style={styles.title}>
+              {data.title}
+            </Animated.Text>
+            <Animated.Text entering={FadeInLeft} style={styles.subTitle}>
+              {data.subTitle}
+            </Animated.Text>
 
             <View style={styles.buttons}>
               <Text style={styles.buttonText} onPress={endOnboarding}>
@@ -118,12 +130,15 @@ export default function NewOnboardingScreen() {
               />
             </View>
           </View>
-        </View>
+        </Animated.View>
       </GestureDetector>
     </SafeAreaView>
   );
 }
 
+/**
+ * @todo: fix small UI bug with icon moving on initial render of the onboarding screen
+ */
 const styles = StyleSheet.create({
   page: {
     flex: 1,
@@ -143,9 +158,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   subTitle: { color: "grey", fontSize: 20, lineHeight: 28 },
+  iconContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   icon: {
-    alignSelf: "center",
-    margin: 20,
     color: theme.colorBlue,
   },
   buttons: {
