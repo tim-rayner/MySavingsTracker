@@ -3,10 +3,16 @@ import { BrandButton } from "@/src/components/atoms/BrandButton";
 import { theme } from "@/theme";
 import { useRouter } from "expo-router";
 import { FontAwesome5 } from "@expo/vector-icons";
+import {
+  Directions,
+  Gesture,
+  GestureDetector,
+} from "react-native-gesture-handler";
 
 //store
 import { useUserStore } from "@/src/stores/userStore";
 import { useState } from "react";
+import { StatusBar } from "expo-status-bar";
 
 type OnboardingStep = {
   title: string;
@@ -28,7 +34,7 @@ const onboardingSteps: OnboardingStep[] = [
   },
   {
     title: "Gamify your finances",
-    subTitle: " Gamify your finances and save more",
+    subTitle: "Gamify your finances and save more",
     icon: "gamepad",
   },
 ];
@@ -71,37 +77,49 @@ export default function NewOnboardingScreen() {
     router.replace("/profile");
   };
 
+  //handle directional swipe gestures
+  const swipes = Gesture.Simultaneous(
+    Gesture.Fling().direction(Directions.LEFT).onEnd(onContinue),
+    Gesture.Fling().direction(Directions.RIGHT).onEnd(onBack),
+  );
+
   return (
     <SafeAreaView style={styles.page}>
-      <View style={styles.pageContent}>
-        <View style={styles.stepIndicatorContainer}>
-          {onboardingSteps.map((step, index) => (
-            <View
-              style={[
-                styles.stepIndicator,
-                index === onboardingPageIndex ? styles.activeStepIndicator : {},
-              ]}
-            />
-          ))}
-        </View>
-        <FontAwesome5 name={data.icon} size={100} style={styles.icon} />
-      </View>
+      <StatusBar style="light" />
+      <GestureDetector gesture={swipes}>
+        <View style={styles.pageContent}>
+          <View style={styles.stepIndicatorContainer}>
+            {onboardingSteps.map((step, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.stepIndicator,
+                  index === onboardingPageIndex
+                    ? styles.activeStepIndicator
+                    : {},
+                ]}
+              />
+            ))}
+          </View>
+          <FontAwesome5 name={data.icon} size={100} style={styles.icon} />
 
-      <View style={styles.footer}>
-        <Text style={styles.title}>{data.title}</Text>
-        <Text style={styles.subTitle}>{data.subTitle}</Text>
+          <View style={styles.footer}>
+            <Text style={styles.title}>{data.title}</Text>
+            <Text style={styles.subTitle}>{data.subTitle}</Text>
 
-        <View style={styles.buttons}>
-          <Text style={styles.buttonText} onPress={endOnboarding}>
-            Skip
-          </Text>
-          <BrandButton
-            title="Continue"
-            onPress={onContinue}
-            style={styles.button}
-          />
+            <View style={styles.buttons}>
+              <Text style={styles.buttonText} onPress={endOnboarding}>
+                Skip
+              </Text>
+              <BrandButton
+                title="Continue"
+                onPress={onContinue}
+                style={styles.button}
+              />
+            </View>
+          </View>
         </View>
-      </View>
+      </GestureDetector>
     </SafeAreaView>
   );
 }
@@ -116,7 +134,6 @@ const styles = StyleSheet.create({
   pageContent: {
     padding: 20,
     flex: 1, //take everything available to you
-    justifyContent: "center",
   },
   title: {
     color: theme.colorWhite,
@@ -149,7 +166,8 @@ const styles = StyleSheet.create({
   stepIndicatorContainer: {
     flex: 1,
     flexDirection: "row",
-    top: 40,
+    top: 10,
+    marginHorizontal: 15,
   },
   stepIndicator: {
     flex: 1, //eqally share the space with the other indicators
