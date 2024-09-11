@@ -13,7 +13,7 @@ export default function ProfileScreen() {
     <View style={styles.container}>
       <Text style={styles.text}>Profile</Text>
 
-      <Link href="/onboarding" asChild>
+      <Link href="/onboarding">
         <BrandButton title="Go to onboarding" onPress={toggleHasOnboarded} />
       </Link>
     </View>
