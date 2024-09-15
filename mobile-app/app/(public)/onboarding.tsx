@@ -8,17 +8,12 @@ import {
   Gesture,
   GestureDetector,
 } from "react-native-gesture-handler";
+import Animated, { SlideInRight, SlideOutLeft } from "react-native-reanimated";
 
 //store
 import { useUserStore } from "@/src/stores/userStore";
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import Animated, {
-  FadeIn,
-  FadeOut,
-  SlideInRight,
-  SlideOutLeft,
-} from "react-native-reanimated";
 
 type OnboardingStep = {
   title: string;
@@ -80,7 +75,7 @@ export default function NewOnboardingScreen() {
   const endOnboarding = () => {
     toggleHasOnboarded();
     //@todo: replace with the start of the auth flow (login or register)
-    router.replace("/profile");
+    router.replace("/signIn");
   };
 
   //handle directional swipe gestures
@@ -93,7 +88,7 @@ export default function NewOnboardingScreen() {
     <SafeAreaView style={styles.page}>
       <StatusBar style="light" />
       <GestureDetector gesture={swipes}>
-        <Animated.View key={onboardingPageIndex} style={styles.pageContent}>
+        <View key={onboardingPageIndex} style={styles.pageContent}>
           <View style={styles.stepIndicatorContainer}>
             {onboardingSteps.map((step, index) => (
               <View
@@ -108,13 +103,9 @@ export default function NewOnboardingScreen() {
             ))}
           </View>
 
-          <Animated.View
-            entering={FadeIn}
-            exiting={FadeOut}
-            style={styles.iconContainer}
-          >
+          <View style={styles.iconContainer}>
             <FontAwesome5 name={data.icon} size={100} style={styles.icon} />
-          </Animated.View>
+          </View>
 
           <View style={styles.footer}>
             <Animated.Text
@@ -143,7 +134,7 @@ export default function NewOnboardingScreen() {
               />
             </View>
           </View>
-        </Animated.View>
+        </View>
       </GestureDetector>
     </SafeAreaView>
   );

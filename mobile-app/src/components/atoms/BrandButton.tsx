@@ -6,9 +6,15 @@ interface BrandButtonProps {
   title: string;
   onPress: () => void;
   style?: ViewStyle; // Add style prop
+  disabled?: boolean;
 }
 
-export function BrandButton({ title, onPress, style }: BrandButtonProps) {
+export function BrandButton({
+  title,
+  onPress,
+  style,
+  disabled,
+}: BrandButtonProps) {
   const handlePressed = () => {
     if (Platform.OS !== "web") {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -22,6 +28,9 @@ export function BrandButton({ title, onPress, style }: BrandButtonProps) {
       style={(state) => {
         if (state.pressed) {
           return [styles.button, styles.buttonPressed, style];
+        }
+        if (disabled) {
+          return [styles.button, styles.buttonDisabled, style];
         }
         return [styles.button, style];
       }}
@@ -47,5 +56,8 @@ const styles = StyleSheet.create({
   },
   buttonPressed: {
     backgroundColor: theme.colorDeepBlue,
+  },
+  buttonDisabled: {
+    backgroundColor: theme.colorGrey,
   },
 });
