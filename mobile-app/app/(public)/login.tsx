@@ -3,8 +3,11 @@ import { BrandButton } from "@/src/components/atoms/BrandButton";
 import TextInput from "@/src/components/atoms/formFields/TextInput";
 import { StyleSheet, View, Alert } from "react-native";
 import { Link } from "expo-router";
+import { useSignIn } from "@clerk/clerk-expo";
 
 export default function LoginScreen() {
+  const { isLoaded, signIn, setActive } = useSignIn();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,34 +21,25 @@ export default function LoginScreen() {
   };
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      Alert.alert("Error", "Please fill in all fields");
-      return;
-    }
+    if (!isLoaded) return;
 
     setLoading(true);
 
     try {
-      const response = await fetch("https://your-api-endpoint.com/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const completeSignIn = await signIn.create({
+        identifier: email,
+        password,
       });
 
-      const data = await response.json();
+      // this indicates that the user has successfully logged in
+      await setActive({
+        session: completeSignIn.createdSessionId,
+      });
 
-      if (response.ok) {
-        // Handle successful login
-        Alert.alert("Success", "Logged in successfully");
-      } else {
-        // Handle server errors
-        Alert.alert("Error", data.message || "Something went wrong");
-      }
-    } catch (error) {
-      // Handle network errors
-      Alert.alert("Error", "Network error. Please try again later.");
+      console.log("User logged in", completeSignIn.userData);
+    } catch (error: any) {
+      console.log(error);
+      Alert.alert("Error", error.message);
     } finally {
       setLoading(false);
     }

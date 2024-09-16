@@ -4,11 +4,16 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
 import { theme } from "@/theme";
+import { useUser } from "@clerk/clerk-expo";
 
-export default function App() {
+export default function HomeScreen() {
+  const { user } = useUser();
+
   return (
     <View style={styles.container}>
-      <Text> Welcome to My Savings Tracker! </Text>
+      <Text>
+        Welcome {user?.emailAddresses[0].emailAddress} to My Savings Tracker!
+      </Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -20,5 +25,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colorWhite,
     alignItems: "center",
     justifyContent: "center",
+    padding: 20,
   },
 });

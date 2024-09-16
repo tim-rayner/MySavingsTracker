@@ -11,6 +11,8 @@ export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [code, setCode] = useState("");
+
   const [pendingVerification, setPendingVerification] = useState(false);
 
   const handleEmailChange = (text: string) => {
@@ -19,40 +21,6 @@ export default function RegisterScreen() {
 
   const handlePasswordChange = (text: string) => {
     setPassword(text);
-  };
-
-  const handleSignUp = async () => {
-    if (!email || !password) {
-      Alert.alert("Error", "Please fill in all fields");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const response = await fetch("https://your-api-endpoint.com/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Handle successful login
-        Alert.alert("Success", "Logged in successfully");
-      } else {
-        // Handle server errors
-        Alert.alert("Error", data.message || "Something went wrong");
-      }
-    } catch (error: any) {
-      // Handle network errors
-      Alert.alert("Error", "Network error. Please try again later.");
-    } finally {
-      setLoading(false);
-    }
   };
 
   const onSignUpPress = async () => {
@@ -73,11 +41,56 @@ export default function RegisterScreen() {
       //change ui to verify the email address
       setPendingVerification(true);
     } catch (error: any) {
+      console.log(error);
       Alert.alert("Error", error.message);
     } finally {
       setLoading(false);
     }
   };
+
+  const onPressVerify = async () => {
+    if (!isLoaded) return;
+
+    setLoading(true);
+
+    try {
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code,
+      });
+
+      //set active session
+      await setActive({ session: completeSignUp.createdSessionId });
+    } catch (error: any) {
+      console.log(error);
+      Alert.alert("Error", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (pendingVerification) {
+    return (
+      <View style={styles.page}>
+        <View style={styles.inputGroup}>
+          <View style={styles.inputField}>
+            <TextInput
+              label="Verification code"
+              value={code}
+              onChangeText={setCode}
+              style={styles.inputField}
+            />
+          </View>
+
+          <BrandButton
+            title={loading ? "Verifying..." : "Verify"}
+            onPress={onPressVerify}
+            style={styles.button}
+            disabled={loading}
+          />
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.page}>
@@ -102,7 +115,7 @@ export default function RegisterScreen() {
 
         <BrandButton
           title={loading ? "Signing up..." : "Sign up"}
-          onPress={handleSignUp}
+          onPress={onSignUpPress}
           style={styles.button}
           disabled={loading}
         />
